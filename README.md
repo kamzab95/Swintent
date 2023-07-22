@@ -1,4 +1,5 @@
 # Swintent
+[![Build Status](https://app.bitrise.io/app/0cb43eed-1cc9-49e7-99bb-aeabca7895eb/status.svg?token=2XIPikHRJNqU6frpklYplg&branch=main)](https://app.bitrise.io/app/0cb43eed-1cc9-49e7-99bb-aeabca7895eb)
 
 ## Overview
 
@@ -50,7 +51,7 @@ struct MyView: View {
     @StateObject var intent: AnyIntent<MyState, MyAction>
     
     var body: some View {
-        TextField("Enter text", text: intent.binding(\.text, input: MyAction.updateText))
+        TextField("Enter text", text: intent.binding(\.text, input: { .updateText($0) }))
     }
 }
 ```

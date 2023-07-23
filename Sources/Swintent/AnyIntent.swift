@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import Combine
 
-public typealias IntentOf<I: Intent> = AnyIntent<I.State, I.Action>
+public typealias AnyIntentOf<I: Intent> = AnyIntent<I.State, I.Action>
 
 public final class AnyIntent<State, Action>: ObservableObject {
 

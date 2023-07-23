@@ -18,7 +18,7 @@ You can add Swintent to your Swift project using Swift Package Manager.
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/kamzab95/Swintent.git", from: "1.0.0")
+    .package(url: "https://github.com/kamzab95/Swintent.git", from: "0.9.0")
 ]
 ```
 

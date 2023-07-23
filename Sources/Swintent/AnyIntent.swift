@@ -51,4 +51,12 @@ public extension AnyIntent {
             }
         }
     }
+    
+    func binding<Value>(_ keyPath: KeyPath<State, Value>, input: @autoclosure @escaping ()->Action) -> Binding<Value> {
+        Binding {
+            self.state[keyPath: keyPath]
+        } set: { _ in
+            self.trigger(input())
+        }
+    }
 }

@@ -28,12 +28,6 @@ public extension Intent {
     }
 }
 
-public extension Intent where Action == Never {
-    func trigger(_ action: Never) async {
-        
-    }
-}
-
 public extension Intent {
     func erase() -> AnyIntent<State, Action> {
         AnyIntent(self)

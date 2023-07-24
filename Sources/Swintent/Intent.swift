@@ -20,9 +20,15 @@ public protocol Intent: ObservableObject {
     func trigger(_ action: Action) async
 }
 
+var counter = 0
+
 public extension Intent {
     func trigger(_ action: Action) {
+        counter += 1
+        let id = counter
+        print("Trigger \(action) \(id)")
         Task { @MainActor in
+            print("Execute \(action) \(id)")
             await trigger(action)
         }
     }

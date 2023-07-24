@@ -37,23 +37,12 @@ final class SwintentTests: XCTestCase {
         XCTAssertEqual(sut.state, FakeState(intValue: 1, stringValue: nil))
     }
     
-    func testMultipleTriggersValue() {
-        let expectation = expectation(description: "testMultipleTriggersValue")
-        expectation.expectedFulfillmentCount = 5
-        
-        sut.objectWillChange
-            .sink { _ in
-                expectation.fulfill()
-            }
-            .store(in: &cancellables)
-        
-        sut.trigger(.increaseValue)
-        sut.trigger(.increaseValue)
-        sut.trigger(.decreaseValue)
-        sut.trigger(.increaseValue)
-        sut.trigger(.increaseValue)
-        
-        waitForExpectations(timeout: 3)
+    func testMultipleTriggersValue() async {
+        await sut.trigger(.increaseValue)
+        await sut.trigger(.increaseValue)
+        await sut.trigger(.decreaseValue)
+        await sut.trigger(.increaseValue)
+        await sut.trigger(.increaseValue)
         
         XCTAssertEqual(sut.state, FakeState(intValue: 3, stringValue: nil))
         XCTAssertEqual(fakeIntent.actionsTriggered, [.increaseValue, .increaseValue, .decreaseValue, .increaseValue, .increaseValue])

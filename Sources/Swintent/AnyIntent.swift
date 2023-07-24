@@ -15,21 +15,28 @@ public typealias AnyIntentOf<I: Intent> = AnyIntent<I.State, I.Action>
 public final class AnyIntent<State, Action>: ObservableObject {
 
     private let wrappedState: () -> State
-    private let wrappedTrigger: (Action) -> Void
+    private let wrappedAsyncTrigger: (Action) async -> Void
     
     public var state: State {
         wrappedState()
     }
 
     public func trigger(_ action: Action) {
-        wrappedTrigger(action)
+        Task { @MainActor in
+            await trigger(action)
+        }
     }
 
+    @MainActor
+    public func trigger(_ action: Action) async {
+        await wrappedAsyncTrigger(action)
+    }
+    
     private var cancelBag = Set<AnyCancellable>()
     
     public init<I: Intent>(_ intent: I) where I.State == State, I.Action == Action {
         self.wrappedState = { intent.state }
-        self.wrappedTrigger = intent.trigger
+        self.wrappedAsyncTrigger = intent.trigger
         
         intent.objectWillChange
             .sink { [weak self] _ in

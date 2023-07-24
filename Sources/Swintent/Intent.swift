@@ -22,7 +22,7 @@ public protocol Intent: ObservableObject {
 
 public extension Intent {
     func trigger(_ action: Action) {
-        Task {
+        Task { @MainActor in
             await trigger(action)
         }
     }

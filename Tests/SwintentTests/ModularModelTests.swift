@@ -43,7 +43,6 @@ final class SwintentTests: XCTestCase {
         
         sut.objectWillChange
             .sink { _ in
-                print("Fulfill")
                 expectation.fulfill()
             }
             .store(in: &cancellables)
